@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; }
+  * { box-sizing: border-box; }
+  @keyframes fadeUp { from { transform: translateY(12px); } to { transform: translateY(0); } }
+  input:focus, textarea:focus, select:focus { outline: none; border-color: #2e7d97 !important; box-shadow: 0 0 0 3px rgba(46,125,151,.12); }
+  ::selection { background: #cdd9e2; }
+</style>
+</helmet>
+
+<div style="min-height:100vh;background:linear-gradient(180deg,#e8f1fb 0%,#eef4fb 38%,#f0f5fb 100%);font-family:'IBM Plex Sans',system-ui,sans-serif;color:#16242f;-webkit-font-smoothing:antialiased;line-height:1.6;">
+
+  <!-- ============ HEADER ============ -->
+  <header style="position:sticky;top:0;z-index:50;background:rgba(233,241,251,.82);backdrop-filter:blur(10px);border-bottom:1px solid #d8e4f1;">
+    <div style="max-width:1180px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;gap:20px;height:72px;flex-wrap:wrap;">
+      <button onClick="{{ goAccueil }}" style="display:flex;align-items:center;gap:11px;background:none;border:none;cursor:pointer;padding:0;">
+        <img src="assets/logo-mark.jpg" alt="F-CONSEIL" style="width:54px;height:54px;border-radius:9px;object-fit:cover;display:block;">
+        <span style="display:flex;flex-direction:column;align-items:flex-start;line-height:1.05;">
+          <span style="font-family:'Spectral',serif;font-weight:600;font-size:19px;color:#0f2942;letter-spacing:-.01em;">F-CONSEIL</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.18em;color:#2e7d97;text-transform:uppercase;">Conseil SI</span>
+        </span>
+      </button>
+      <nav style="display:flex;align-items:center;gap:26px;flex-wrap:wrap;">
+        <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="5">
+          <button onClick="{{ item.onClick }}" aria-current="{{ item.ariaCurrent }}" style="{{ item.style }}">{{ item.label }}</button>
+        </sc-for>
+        <button onClick="{{ goContact }}" style="display:inline-flex;align-items:center;gap:7px;background:#0f2942;color:#fff;font-family:'IBM Plex Sans',sans-serif;font-weight:600;font-size:14px;padding:10px 18px;border-radius:6px;border:none;cursor:pointer;" style-hover="background:#14385a;">Demander une prestation</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ============ ACCUEIL ============ -->
+  <sc-if value="{{ isAccueil }}" hint-placeholder-val="{{ true }}">
+  <main style="animation:fadeUp .5s ease both;">
+
+    <!-- HERO A : split classique -->
+    <sc-if value="{{ heroIsA }}" hint-placeholder-val="{{ true }}">
+    <section style="max-width:1180px;margin:0 auto;padding:48px 24px 76px;display:flex;gap:56px;flex-wrap:wrap;align-items:center;">
+      <div style="flex:1 1 420px;min-width:0;">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:12.5px;letter-spacing:.16em;color:#2e7d97;text-transform:uppercase;margin-bottom:22px;">Conseil en systèmes d'information</div>
+        <h1 style="font-family:'Spectral',serif;font-weight:600;font-size:clamp(34px,4.6vw,54px);line-height:1.08;letter-spacing:-.015em;color:#0f2942;margin:0 0 22px;text-wrap:balance;">Des systèmes d'information à la hauteur du service public.</h1>
+        <p style="font-size:18px;color:#4a5a66;max-width:520px;margin:0 0 34px;">J'accompagne les collectivités territoriales et les structures publiques pour bâtir un SI clair, sûr et durable — de l'audit à la mise en œuvre.</p>
+        <div style="display:flex;gap:14px;flex-wrap:wrap;">
+          <button onClick="{{ goContact }}" style="display:inline-flex;align-items:center;gap:8px;background:#0f2942;color:#fff;font-family:'IBM Plex Sans',sans-serif;font-weight:600;font-size:15px;padding:14px 26px;border-radius:6px;border:none;cursor:pointer;" style-hover="background:#14385a;">Demander un audit</button>
+          <button onClick="{{ goPrestations }}" style="display:inline-flex;align-items:center;gap:8px;background:#fff;color:#0f2942;font-family:'IBM Plex Sans',sans-serif;font-weight:600;font-size:15px;padding:14px 26px;border-radius:6px;border:1px solid #cdd9e2;cursor:pointer;" style-hover="border-color:#0f2942;">Voir les prestations</button>
+        </div>
+        <div style="margin-top:34px;display:flex;align-items:center;gap:10px;font-size:13.5px;color:#5b6b77;">
+          <span style="width:8px;height:8px;border-radius:50%;background:#3aa07a;display:inline-block;"></span>
+          Intervention indépendante · Collectivités &amp; services publics
+        </div>
+      </div>
+      <div style="flex:1 1 360px;min-width:0;">
+        <div style="position:relative;border-radius:12px;overflow:hidden;aspect-ratio:4/5;border:1px solid #dde6ec;background-image:repeating-linear-gradient(135deg,#e8eef3 0 14px,#eef3f7 14px 28px);display:flex;align-items:flex-end;">
+          <div style="margin:18px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:#8a99a4;background:rgba(255,255,255,.8);padding:6px 10px;border-radius:5px;">portrait / photo — à fournir</div>
+        </div>
+      </div>
+    </section>
+    </sc-if>
+
+    <!-- HERO B : éditorial centré -->
+    <sc-if value="{{ heroIsB }}" hint-placeholder-val="{{ false }}">
+    <section style="max-width:1080px;margin:0 auto;padding:64px 24px 40px;text-align:center;">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:12.5px;letter-spacing:.16em;color:#2e7d97;text-transform:uppercase;margin-bottom:24px;">F-CONSEIL — Conseil en systèmes d'information</div>
+      <h1 style="font-family:'Spectral',serif;font-weight:600;font-size:clamp(40px,6vw,72px);line-height:1.05;letter-spacing:-.02em;color:#0f2942;margin:0 auto 26px;max-width:none;text-wrap:balance;">Votre Système d'Information, un appui stratégique pour votre territoire et vos administrés.</h1>
+      <p style="font-size:19px;color:#4a5a66;max-width:600px;margin:0 auto 36px;">Audit de votre SI, Approche globale et stratégique de votre SI, Plan de Continuité d'Activité, Gestion de crise Cyber, DSI en temps partagé…<br>Un accompagnement stratégique et opérationnel avec 25 ans d'expérience en collectivités territoriales et en système d'information.</p>
+      <div style="display:flex;gap:14px;flex-wrap:wrap;justify-content:center;">
+        <button onClick="{{ goContact }}" style="display:inline-flex;align-items:center;gap:8px;background:#0f2942;color:#fff;font-family:'IBM Plex Sans',sans-serif;font-weight:600;font-size:15px;padding:14px 26px;border-radius:6px;border:none;cursor:pointer;" style-hover="background:#14385a;">Prendre rendez-vous</button>
+        <button onClick="{{ goMethodo }}" style="display:inline-flex;align-items:center;gap:8px;background:#fff;color:#0f2942;font-family:'IBM Plex Sans',sans-serif;font-weight:600;font-size:15px;padding:14px 26px;border-radius:6px;border:1px solid #cdd9e2;cursor:pointer;" style-hover="border-color:#0f2942;">Mon approche</button>
+      </div>
+    </section>
+    </sc-if>
+
+    <!-- HERO C : bandeau navy -->
+    <sc-if value="{{ heroIsC }}" hint-placeholder-val="{{ false }}">
+    <section style="background:#0f2942;color:#eaf1f6;">
+      <div style="max-width:1180px;margin:0 auto;padding:72px 24px;display:flex;gap:56px;flex-wrap:wrap;align-items:center;">
+        <div style="flex:1 1 440px;min-width:0;">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:12.5px;letter-spacing:.16em;color:#7fb6c9;text-transform:uppercase;margin-bottom:22px;">Conseil &amp; DSI partagé</div>
+          <h1 style="font-family:'Spectral',serif;font-weight:600;font-size:clamp(34px,4.8vw,56px);line-height:1.07;letter-spacing:-.015em;color:#fff;margin:0 0 22px;text-wrap:balance;">Un système d'information clair, sûr et maîtrisé.</h1>
+          <p style="font-size:18px;color:#b9cdd9;max-width:520px;margin:0 0 34px;">Pour les collectivités qui veulent décider sereinement de leur informatique : un regard indépendant, une méthode rigoureuse et un accompagnement de bout en bout.</p>
+          <div style="display:flex;gap:14px;flex-wrap:wrap;">
+            <button onClick="{{ goContact }}" style="display:inline-flex;align-items:center;gap:8px;background:#fff;color:#0f2942;font-family:'IBM Plex Sans',sans-serif;font-weight:600;font-size:15px;padding:14px 26px;border-radius:6px;border:none;cursor:pointer;" style-hover="background:#dfeaf1;">Demander un audit</button>
+            <button onClick="{{ goPrestations }}" style="display:inline-flex;align-items:center;gap:8px;background:transparent;color:#fff;font-family:'IBM Plex Sans',sans-serif;font-weight:600;font-size:15px;padding:14px 26px;border-radius:6px;border:1px solid rgba(255,255,255,.4);cursor:pointer;" style-hover="border-color:#fff;">Les prestations</button>
+          </div>
+        </div>
+        <div style="flex:1 1 320px;min-width:0;">
+          <div style="border:1px solid rgba(255,255,255,.15);border-radius:12px;background:rgba(255,255,255,.04);padding:10px;">
+            <sc-for list="{{ prestations }}" as="item" hint-placeholder-count="6">
+              <div style="display:flex;align-items:center;gap:14px;padding:13px 14px;border-bottom:1px solid rgba(255,255,255,.08);">
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#7fb6c9;">{{ item.idx }}</span>
+                <span style="font-size:15px;color:#eaf1f6;font-weight:500;">{{ item.title }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </section>
+    </sc-if>
+
+    <!-- PRESTATIONS preview (shared) -->
+    <section style="padding:76px 0;background:#fff;border-top:1px solid #eef2f5;border-bottom:1px solid #eef2f5;">
+      <div style="max-width:1180px;margin:0 auto;padding:0 24px;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:42px;">
+          <div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.14em;color:#2e7d97;text-transform:uppercase;margin-bottom:14px;">Prestations</div>
+            <h2 style="font-family:'Spectral',serif;font-weight:600;font-size:clamp(26px,3.4vw,38px);line-height:1.12;color:#0f2942;margin:0;max-width:18ch;">Du diagnostic à la mise en œuvre.</h2>
+          </div>
+          <button onClick="{{ goPrestations }}" style="font-family:'IBM Plex Sans',sans-serif;font-size:15px;font-weight:600;color:#2e7d97;background:none;border:none;cursor:pointer;padding:0;white-space:nowrap;">Toutes les prestations →</button>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:18px;">
+          <sc-for list="{{ prestations }}" as="item" hint-placeholder-count="6">
+            <div style="background:#fff;border:1px solid #e3eaef;border-radius:11px;overflow:hidden;transition:box-shadow .2s,transform .2s;" style-hover="box-shadow:0 10px 30px -12px rgba(15,41,66,.18);transform:translateY(-2px);">
+              <div style="position:relative;height:158px;background:#dde6ec;">
+                <img src="{{ item.img }}" alt="{{ item.title }}" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;">
+              </div>
+              <div style="padding:24px 26px 26px;">
+                <h3 style="font-family:'Spectral',serif;font-weight:600;font-size:20px;color:#0f2942;margin:0 0 10px;">{{ item.title }}</h3>
+                <p style="font-size:14.5px;color:#5b6b77;margin:0 0 16px;">{{ item.desc }}</p>
+                <div style="font-size:13.5px;color:#2e7d97;font-weight:600;">→ {{ item.benefit }}</div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+
+    <!-- middle image band -->
+    <section style="position:relative;background:#0a1d30;overflow:hidden;">
+      <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=70" alt="Au service des collectivités territoriales" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.30;">
+      <div style="position:relative;max-width:1180px;margin:0 auto;padding:88px 24px;text-align:center;">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.16em;color:#7fb6c9;text-transform:uppercase;margin-bottom:18px;">Au service de l'intérêt général</div>
+        <p style="font-family:'Spectral',serif;font-weight:600;font-size:clamp(24px,3.4vw,38px);line-height:1.2;color:#fff;margin:0 auto;max-width:22ch;text-wrap:balance;">25 ans d'expérience au service des collectivités territoriales et de leur système d'information.</p>
+      </div>
+    </section>
+
+    <!-- METHODE preview (shared) -->
+    <section style="padding:76px 0;">
+      <div style="max-width:1180px;margin:0 auto;padding:0 24px;">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.14em;color:#2e7d97;text-transform:uppercase;margin-bottom:14px;">Mon approche</div>
+        <h2 style="font-family:'Spectral',serif;font-weight:600;font-size:clamp(26px,3.4vw,38px);line-height:1.12;color:#0f2942;margin:0 0 44px;max-width:20ch;">Une démarche simple, du contexte à l'autonomie.</h2>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:20px;">
+          <sc-for list="{{ steps }}" as="item" hint-placeholder-count="5">
+            <div style="padding-top:18px;border-top:2px solid #0f2942;">
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#2e7d97;margin-bottom:10px;">0{{ item.idx }}</div>
+              <h3 style="font-family:'Spectral',serif;font-weight:600;font-size:18px;color:#0f2942;margin:0 0 8px;">{{ item.title }}</h3>
+              <p style="font-size:13.5px;color:#5b6b77;margin:0;">{{ item.desc }}</p>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA band (shared) -->
+    <section style="background:#0f2942;">
+      <div style="max-width:1180px;margin:0 auto;padding:64px 24px;display:flex;gap:30px;flex-wrap:wrap;align-items:center;justify-content:space-between;">
+        <h2 style="font-family:'Spectral',serif;font-weight:600;font-size:clamp(24px,3.2vw,34px);line-height:1.15;color:#fff;margin:0;max-width:20ch;">Parlons de votre système d'information.</h2>
+        <button onClick="{{ goContact }}" style="display:inline-flex;align-items:center;gap:8px;background:#fff;color:#0f2942;font-family:'IBM Plex Sans',sans-serif;font-weight:600;font-size:15px;padding:15px 28px;border-radius:6px;border:none;cursor:pointer;white-space:nowrap;" style-hover="background:#dfeaf1;">Demander une prestation</button>
+      </div>
+    </section>
+
+  </main>
+  </sc-if>
+
+  <!-- ============ PRESTATIONS ============ -->
+  <sc-if value="{{ isPrestations }}" hint-placeholder-val="{{ false }}">
+  <main style="animation:fadeUp .5s ease both;">
+    <section style="max-width:1180px;margin:0 auto;padding:64px 24px 36px;">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:12.5px;letter-spacing:.16em;color:#2e7d97;text-transform:uppercase;margin-bottom:20px;">Prestations</div>
+      <h1 style="font-family:'Spectral',serif;font-weight:600;font-size:clamp(32px,4.4vw,50px);line-height:1.08;letter-spacing:-.015em;color:#0f2942;margin:0 0 20px;max-width:16ch;">Accompagnement stratégique et mise en œuvre.</h1>
+      <p style="font-size:18px;color:#4a5a66;max-width:620px;margin:0;">Chaque mission combine une vision claire et une exécution concrète. Vous gardez la main ; je vous apporte la méthode, l'expertise et la disponibilité.</p>
+    </section>
+    <section style="padding:24px 0 72px;">
+      <div style="max-width:1180px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:18px;">
+        <sc-for list="{{ prestations }}" as="item" hint-placeholder-count="6">
+          <div style="background:#fff;border:1px solid #e3eaef;border-radius:11px;padding:30px;display:flex;flex-direction:column;">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#9aa9b3;margin-bottom:16px;">{{ item.idx }}</div>
+            <h3 style="font-family:'Spectral',serif;font-weight:600;font-size:21px;color:#0f2942;margin:0 0 12px;">{{ item.title }}</h3>
+            <p style="font-size:15px;color:#5b6b77;margin:0 0 20px;flex:1;">{{ item.desc }}</p>
+            <div style="display:flex;align-items:center;gap:9px;padding-top:16px;border-top:1px solid #eef2f5;font-size:14px;color:#2e7d97;font-weight:600;">→ {{ item.benefit }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+    <section style="background:#0f2942;">
+      <div style="max-width:1180px;margin:0 auto;padding:60px 24px;display:flex;gap:30px;flex-wrap:wrap;align-items:center;justify-content:space-between;">
+        <div>
+          <h2 style="font-family:'Spectral',serif;font-weight:600;font-size:clamp(24px,3vw,32px);color:#fff;margin:0 0 8px;">Une prestation sur mesure ?</h2>
+          <p style="color:#b9cdd9;font-size:16px;margin:0;">Décrivez votre besoin, je vous réponds sous 48 h.</p>
+        </div>
+        <button onClick="{{ goContact }}" style="display:inline-flex;align-items:center;gap:8px;background:#fff;color:#0f2942;font-family:'IBM Plex Sans',sans-serif;font-weight:600;font-size:15px;padding:15px 28px;border-radius:6px;border:none;cursor:pointer;white-space:nowrap;" style-hover="background:#dfeaf1;">Me contacter</button>
+      </div>
+    </section>
+  </main>
+  </sc-if>
+
+  <!-- ============ À PROPOS ============ -->
+  <sc-if value="{{ isApropos }}" hint-placeholder-val="{{ false }}">
+  <main style="animation:fadeUp .5s ease both;">
+    <section style="max-width:1180px;margin:0 auto;padding:64px 24px 60px;display:flex;gap:56px;flex-wrap:wrap;">
+      <div style="flex:1 1 460px;min-width:0;">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:12.5px;letter-spacing:.16em;color:#2e7d97;text-transform:uppercase;margin-bottom:20px;">À propos</div>
+        <h1 style="font-family:'Spectral',serif;font-weight:600;font-size:clamp(32px,4.2vw,48px);line-height:1.08;letter-spacing:-.015em;color:#0f2942;margin:0 0 24px;max-width:18ch;">Un interlocuteur unique, qui connaît le terrain public.</h1>
+        <p style="font-size:17px;color:#4a5a66;margin:0 0 18px;">Je suis Franck, consultant indépendant en systèmes d'information. J'accompagne les collectivités territoriales et les structures publiques dans le pilotage, la sécurisation et la modernisation de leur informatique.</p>
+        <p style="font-size:17px;color:#4a5a66;margin:0 0 18px;">Mon approche est simple : comprendre votre contexte avant de proposer, parler le langage des élus comme celui des techniciens, et viser des solutions concrètes et soutenables dans la durée — pas des rapports qui dorment dans un tiroir.</p>
+        <p style="font-size:17px;color:#4a5a66;margin:0;">Indépendant, sans revente ni intérêt commercial, je m'engage à ne défendre qu'une chose : votre intérêt et celui du service rendu aux usagers.</p>
+      </div>
+      <div style="flex:1 1 300px;min-width:0;">
+        <div style="position:relative;border-radius:12px;overflow:hidden;aspect-ratio:3/4;border:1px solid #dde6ec;background-image:repeating-linear-gradient(135deg,#e8eef3 0 14px,#eef3f7 14px 28px);display:flex;align-items:flex-end;">
+          <div style="margin:16px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:#8a99a4;background:rgba(255,255,255,.8);padding:6px 10px;border-radius:5px;">portrait — à fournir</div>
+        </div>
+      </div>
+    </section>
+    <section style="padding:8px 0 76px;">
+      <div style="max-width:1180px;margin:0 auto;padding:0 24px;">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.14em;color:#2e7d97;text-transform:uppercase;margin-bottom:28px;">Mes engagements</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;">
+          <sc-for list="{{ valeurs }}" as="item" hint-placeholder-count="4">
+            <div style="background:#fff;border:1px solid #e3eaef;border-radius:11px;padding:26px;">
+              <h3 style="font-family:'Spectral',serif;font-weight:600;font-size:18px;color:#0f2942;margin:0 0 10px;">{{ item.title }}</h3>
+              <p style="font-size:14px;color:#5b6b77;margin:0;">{{ item.desc }}</p>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+    <section style="background:#0f2942;">
+      <div style="max-width:1180px;margin:0 auto;padding:60px 24px;display:flex;gap:30px;flex-wrap:wrap;align-items:center;justify-content:space-between;">
+        <h2 style="font-family:'Spectral',serif;font-weight:600;font-size:clamp(24px,3vw,32px);color:#fff;margin:0;max-width:22ch;">Faisons connaissance autour de votre projet.</h2>
+        <button onClick="{{ goContact }}" style="display:inline-flex;align-items:center;gap:8px;background:#fff;color:#0f2942;font-family:'IBM Plex Sans',sans-serif;font-weight:600;font-size:15px;padding:15px 28px;border-radius:6px;border:none;cursor:pointer;white-space:nowrap;" style-hover="background:#dfeaf1;">Prendre rendez-vous</button>
+      </div>
+    </section>
+  </main>
+  </sc-if>
+
+  <!-- ============ MÉTHODE ============ -->
+  <sc-if value="{{ isMethodo }}" hint-placeholder-val="{{ false }}">
+  <main style="animation:fadeUp .5s ease both;">
+    <section style="max-width:1180px;margin:0 auto;padding:64px 24px 40px;">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:12.5px;letter-spacing:.16em;color:#2e7d97;text-transform:uppercase;margin-bottom:20px;">Mon approche</div>
+      <h1 style="font-family:'Spectral',serif;font-weight:600;font-size:clamp(32px,4.4vw,50px);line-height:1.08;letter-spacing:-.015em;color:#0f2942;margin:0 0 20px;max-width:16ch;">Comprendre avant de proposer.</h1>
+      <p style="font-size:18px;color:#4a5a66;max-width:640px;margin:0;">Chaque collectivité est différente. Ma méthode part toujours de votre réalité — vos contraintes, vos usages, votre budget — pour aboutir à des décisions tenables et partagées.</p>
+    </section>
+    <section style="padding:20px 0 64px;">
+      <div style="max-width:880px;margin:0 auto;padding:0 24px;">
+        <sc-for list="{{ steps }}" as="item" hint-placeholder-count="5">
+          <div style="display:flex;gap:26px;align-items:flex-start;padding:26px 0;border-bottom:1px solid #e7edf1;">
+            <div style="flex:none;width:54px;height:54px;border-radius:50%;background:#fff;border:2px solid #0f2942;display:flex;align-items:center;justify-content:center;font-family:'Spectral',serif;font-weight:600;font-size:20px;color:#0f2942;">{{ item.idx }}</div>
+            <div style="padding-top:4px;">
+              <h3 style="font-family:'Spectral',serif;font-weight:600;font-size:22px;color:#0f2942;margin:0 0 8px;">{{ item.title }}</h3>
+              <p style="font-size:16px;color:#5b6b77;margin:0;max-width:60ch;">{{ item.desc }}</p>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+    <section style="background:#0f2942;">
+      <div style="max-width:1180px;margin:0 auto;padding:60px 24px;display:flex;gap:30px;flex-wrap:wrap;align-items:center;justify-content:space-between;">
+        <h2 style="font-family:'Spectral',serif;font-weight:600;font-size:clamp(24px,3vw,32px);color:#fff;margin:0;max-width:22ch;">Prêt à clarifier votre trajectoire SI ?</h2>
+        <button onClick="{{ goContact }}" style="display:inline-flex;align-items:center;gap:8px;background:#fff;color:#0f2942;font-family:'IBM Plex Sans',sans-serif;font-weight:600;font-size:15px;padding:15px 28px;border-radius:6px;border:none;cursor:pointer;white-space:nowrap;" style-hover="background:#dfeaf1;">Demander un audit</button>
+      </div>
+    </section>
+  </main>
+  </sc-if>
+
+  <!-- ============ CONTACT ============ -->
+  <sc-if value="{{ isContact }}" hint-placeholder-val="{{ false }}">
+  <main style="animation:fadeUp .5s ease both;">
+    <section style="max-width:1180px;margin:0 auto;padding:64px 24px 76px;display:flex;gap:56px;flex-wrap:wrap;">
+      <div style="flex:1 1 360px;min-width:0;">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:12.5px;letter-spacing:.16em;color:#2e7d97;text-transform:uppercase;margin-bottom:20px;">Contact</div>
+        <h1 style="font-family:'Spectral',serif;font-weight:600;font-size:clamp(30px,4vw,46px);line-height:1.08;letter-spacing:-.015em;color:#0f2942;margin:0 0 20px;max-width:14ch;">Parlons de votre besoin.</h1>
+        <p style="font-size:17px;color:#4a5a66;margin:0 0 36px;max-width:42ch;">Décrivez votre contexte en quelques lignes. Je vous réponds personnellement sous 48 heures ouvrées.</p>
+        <div style="display:flex;flex-direction:column;gap:22px;">
+          <div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.12em;color:#8595a0;text-transform:uppercase;margin-bottom:6px;">Email</div>
+            <a href="mailto:f-conseil@outlook.com" style="font-size:16px;color:#16242f;text-decoration:none;" style-hover="color:#2e7d97;">f-conseil@outlook.com</a>
+          </div>
+          <div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.12em;color:#8595a0;text-transform:uppercase;margin-bottom:6px;">Téléphone</div>
+            <a href="tel:+33665603142" style="font-size:16px;color:#16242f;text-decoration:none;" style-hover="color:#2e7d97;">06 65 60 31 42</a>
+          </div>
+          <div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.12em;color:#8595a0;text-transform:uppercase;margin-bottom:6px;">LinkedIn</div>
+            <a href="https://www.linkedin.com/in/f-conseil-8b9b01324/" target="_blank" rel="noopener" style="font-size:16px;color:#16242f;text-decoration:none;" style-hover="color:#2e7d97;">linkedin.com/in/f-conseil</a>
+          </div>
+          <div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.12em;color:#8595a0;text-transform:uppercase;margin-bottom:6px;">Zone d'intervention</div>
+            <div style="font-size:16px;color:#16242f;">France — sur site et à distance</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:#3aa07a;margin-top:4px;">
+            <span style="width:8px;height:8px;border-radius:50%;background:#3aa07a;display:inline-block;"></span>
+            Disponible pour de nouvelles missions
+          </div>
+        </div>
+      </div>
+      <div style="flex:1 1 420px;min-width:0;">
+        <sc-if value="{{ formSent }}" hint-placeholder-val="{{ false }}">
+          <div style="background:#fff;border:1px solid #e3eaef;border-radius:12px;padding:40px;text-align:center;">
+            <div style="width:56px;height:56px;border-radius:50%;background:#eaf6f0;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:26px;color:#3aa07a;">✓</div>
+            <h3 style="font-family:'Spectral',serif;font-weight:600;font-size:23px;color:#0f2942;margin:0 0 10px;">Merci, votre demande est notée.</h3>
+            <p style="font-size:15px;color:#5b6b77;margin:0 0 24px;">Je reviens vers vous sous 48 heures ouvrées.</p>
+            <button onClick="{{ resetForm }}" style="background:none;border:1px solid #cdd9e2;color:#0f2942;font-family:'IBM Plex Sans',sans-serif;font-weight:600;font-size:14px;padding:11px 20px;border-radius:6px;cursor:pointer;">Envoyer une autre demande</button>
+          </div>
+        </sc-if>
+        <sc-if value="{{ formNotSent }}" hint-placeholder-val="{{ true }}">
+          <form onSubmit="{{ onSubmit }}" style="background:#fff;border:1px solid #e3eaef;border-radius:12px;padding:32px;display:flex;flex-direction:column;gap:18px;">
+            <div style="display:flex;gap:16px;flex-wrap:wrap;">
+              <label style="flex:1 1 160px;display:flex;flex-direction:column;gap:7px;">
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.1em;color:#5b6b77;text-transform:uppercase;">Nom *</span>
+                <input type="text" required placeholder="Votre nom" style="font-family:'IBM Plex Sans',sans-serif;font-size:15px;color:#16242f;padding:11px 13px;border:1px solid #d8e1e8;border-radius:7px;background:#fbfcfd;">
+              </label>
+              <label style="flex:1 1 160px;display:flex;flex-direction:column;gap:7px;">
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.1em;color:#5b6b77;text-transform:uppercase;">Collectivité / structure</span>
+                <input type="text" placeholder="Mairie, EPCI, service…" style="font-family:'IBM Plex Sans',sans-serif;font-size:15px;color:#16242f;padding:11px 13px;border:1px solid #d8e1e8;border-radius:7px;background:#fbfcfd;">
+              </label>
+            </div>
+            <div style="display:flex;gap:16px;flex-wrap:wrap;">
+              <label style="flex:1 1 160px;display:flex;flex-direction:column;gap:7px;">
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.1em;color:#5b6b77;text-transform:uppercase;">Email *</span>
+                <input type="email" required placeholder="vous@collectivite.fr" style="font-family:'IBM Plex Sans',sans-serif;font-size:15px;color:#16242f;padding:11px 13px;border:1px solid #d8e1e8;border-radius:7px;background:#fbfcfd;">
+              </label>
+              <label style="flex:1 1 160px;display:flex;flex-direction:column;gap:7px;">
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.1em;color:#5b6b77;text-transform:uppercase;">Téléphone</span>
+                <input type="tel" placeholder="Optionnel" style="font-family:'IBM Plex Sans',sans-serif;font-size:15px;color:#16242f;padding:11px 13px;border:1px solid #d8e1e8;border-radius:7px;background:#fbfcfd;">
+              </label>
+            </div>
+            <label style="display:flex;flex-direction:column;gap:7px;">
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.1em;color:#5b6b77;text-transform:uppercase;">Sujet</span>
+              <select style="font-family:'IBM Plex Sans',sans-serif;font-size:15px;color:#16242f;padding:11px 13px;border:1px solid #d8e1e8;border-radius:7px;background:#fbfcfd;cursor:pointer;">
+                <sc-for list="{{ subjects }}" as="s" hint-placeholder-count="7">
+                  <option>{{ s }}</option>
+                </sc-for>
+              </select>
+            </label>
+            <label style="display:flex;flex-direction:column;gap:7px;">
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.1em;color:#5b6b77;text-transform:uppercase;">Votre message *</span>
+              <textarea required rows="5" placeholder="Décrivez votre contexte et votre besoin…" style="font-family:'IBM Plex Sans',sans-serif;font-size:15px;color:#16242f;padding:11px 13px;border:1px solid #d8e1e8;border-radius:7px;background:#fbfcfd;resize:vertical;"></textarea>
+            </label>
+            <button type="submit" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;background:#0f2942;color:#fff;font-family:'IBM Plex Sans',sans-serif;font-weight:600;font-size:15px;padding:14px 26px;border-radius:7px;border:none;cursor:pointer;margin-top:4px;" style-hover="background:#14385a;">Envoyer ma demande</button>
+            <p style="font-size:12px;color:#9aa9b3;margin:0;text-align:center;">En envoyant ce formulaire, vous acceptez d'être recontacté au sujet de votre demande.</p>
+          </form>
+        </sc-if>
+      </div>
+    </section>
+  </main>
+  </sc-if>
+
+  <!-- ============ FOOTER ============ -->
+  <footer style="background:#0a1d30;color:#9fb4c2;">
+    <div style="max-width:1180px;margin:0 auto;padding:56px 24px 32px;display:flex;gap:40px;flex-wrap:wrap;justify-content:space-between;">
+      <div style="flex:1 1 260px;max-width:340px;">
+        <div style="display:flex;align-items:center;gap:11px;margin-bottom:16px;">
+          <img src="assets/logo-mark.jpg" alt="F-CONSEIL" style="width:34px;height:34px;border-radius:7px;object-fit:cover;display:block;">
+          <span style="font-family:'Spectral',serif;font-weight:600;font-size:18px;color:#fff;">F-CONSEIL</span>
+        </div>
+        <p style="font-size:14px;color:#8aa0af;margin:0;">Conseil indépendant en systèmes d'information pour les collectivités territoriales et le secteur public.</p>
+      </div>
+      <div style="flex:0 1 auto;">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.12em;color:#5e7689;text-transform:uppercase;margin-bottom:16px;">Navigation</div>
+        <div style="display:flex;flex-direction:column;gap:11px;align-items:flex-start;">
+          <button onClick="{{ goAccueil }}" style="background:none;border:none;color:#bccdd9;font-family:'IBM Plex Sans',sans-serif;font-size:14px;cursor:pointer;padding:0;" style-hover="color:#fff;">Accueil</button>
+          <button onClick="{{ goPrestations }}" style="background:none;border:none;color:#bccdd9;font-family:'IBM Plex Sans',sans-serif;font-size:14px;cursor:pointer;padding:0;" style-hover="color:#fff;">Prestations</button>
+          <button onClick="{{ goApropos }}" style="background:none;border:none;color:#bccdd9;font-family:'IBM Plex Sans',sans-serif;font-size:14px;cursor:pointer;padding:0;" style-hover="color:#fff;">À propos</button>
+          <button onClick="{{ goMethodo }}" style="background:none;border:none;color:#bccdd9;font-family:'IBM Plex Sans',sans-serif;font-size:14px;cursor:pointer;padding:0;" style-hover="color:#fff;">Mon approche</button>
+          <button onClick="{{ goContact }}" style="background:none;border:none;color:#bccdd9;font-family:'IBM Plex Sans',sans-serif;font-size:14px;cursor:pointer;padding:0;" style-hover="color:#fff;">Contact</button>
+        </div>
+      </div>
+      <div style="flex:0 1 auto;">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.12em;color:#5e7689;text-transform:uppercase;margin-bottom:16px;">Contact</div>
+        <div style="display:flex;flex-direction:column;gap:11px;font-size:14px;">
+          <a href="mailto:f-conseil@outlook.com" style="color:#bccdd9;text-decoration:none;" style-hover="color:#fff;">f-conseil@outlook.com</a>
+          <a href="tel:+33665603142" style="color:#bccdd9;text-decoration:none;" style-hover="color:#fff;">06 65 60 31 42</a>
+          <a href="https://www.linkedin.com/in/f-conseil-8b9b01324/" target="_blank" rel="noopener" style="color:#bccdd9;text-decoration:none;" style-hover="color:#fff;">LinkedIn</a>
+          <span style="color:#8aa0af;">France · sur site &amp; à distance</span>
+        </div>
+      </div>
+    </div>
+    <div style="border-top:1px solid rgba(255,255,255,.08);">
+      <div style="max-width:1180px;margin:0 auto;padding:18px 24px;display:flex;gap:16px;flex-wrap:wrap;justify-content:space-between;font-size:12.5px;color:#5e7689;">
+        <span>© {{ year }} F-CONSEIL — Conseil en systèmes d'information</span>
+        <span>Mentions légales · Confidentialité</span>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<template id="__bundler_thumbnail">
+  <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <rect width="100" height="100" fill="#0f2942"/>
+    <rect x="30" y="30" width="40" height="40" rx="8" fill="#2e7d97"/>
+    <text x="50" y="63" font-family="Georgia,serif" font-size="30" fill="#ffffff" text-anchor="middle" font-weight="700">F</text>
+  </svg>
+</template></x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { page: 'accueil', hero: 'b', formSent: false };
+
+  go(page) {
+    this.setState({ page: page, formSent: false });
+    if (typeof window !== 'undefined') window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  }
+
+  navStyle(active) {
+    const base = {
+      fontFamily: "'IBM Plex Sans',sans-serif",
+      fontSize: '15px',
+      background: 'none',
+      cursor: 'pointer',
+      padding: '6px 2px',
+    };
+    return active
+      ? Object.assign({}, base, { fontWeight: 600, color: '#0f2942', border: 'none', borderBottom: '2px solid #2e7d97' })
+      : Object.assign({}, base, { fontWeight: 500, color: '#5b6b77', border: 'none', borderBottom: '2px solid transparent' });
+  }
+
+  segStyle(active) {
+    const base = {
+      fontFamily: "'IBM Plex Mono',monospace",
+      fontSize: '12px',
+      fontWeight: 500,
+      letterSpacing: '.05em',
+      cursor: 'pointer',
+      padding: '7px 14px',
+      borderRadius: '5px',
+    };
+    return active
+      ? Object.assign({}, base, { color: '#fff', background: '#0f2942', border: '1px solid #0f2942' })
+      : Object.assign({}, base, { color: '#0f2942', background: '#fff', border: '1px solid #cdd9e2' });
+  }
+
+  renderVals() {
+    const p = this.state.page;
+    const h = this.state.hero;
+    const mk = (label, key) => ({
+      label: label,
+      onClick: () => this.go(key),
+      style: this.navStyle(p === key),
+      ariaCurrent: p === key ? 'page' : undefined,
+    });
+
+    const prestations = [
+      { idx: '01', title: "Audit du système d'information", img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=70", desc: "Un état des lieux objectif de votre SI : infrastructure, applications, sécurité, organisation et réglementation. Vous savez précisément où vous en êtes.", benefit: "Des décisions éclairées, sans angle mort." },
+      { idx: '02', title: "Approche globale et stratégique — Schéma directeur SI", img: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=600&q=70", desc: "Une feuille de route sur 3-5 années alignée sur votre projet de territoire et adaptée à vos contraintes temporelles et budgétaires, partagée avec les Élus et les services.", benefit: "Une trajectoire lisible et défendable." },
+      { idx: '03', title: "Plan de continuité d'activité", img: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=600&q=70", desc: "Anticiper l'incident plutôt que le subir : sauvegardes, procédures de reprise et priorités définies, documentées et testées.", benefit: "Vos services essentiels protégés." },
+      { idx: '04', title: "Gestion de crise cyber", img: "https://images.unsplash.com/photo-1614064641938-3bbee52942c7?auto=format&fit=crop&w=600&q=70", desc: "Préparation de l'organisation et de la communication, procédures et fiches réflexes. Bien préparer, c'est moins subir l'incident.", benefit: "Réagir vite, limiter l'impact." },
+      { idx: '05', title: "DSI en temps partagé", img: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=600&q=70", desc: "L'expertise d'un directeur des systèmes d'information à temps choisi, pour piloter votre SI sans le coût d'un poste à plein temps.", benefit: "Un pilotage SI à votre échelle." },
+      { idx: '06', title: "Automatisation de vos process avec l'IA", img: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=600&q=70", desc: "Identifier vos besoins et automatiser les tâches répétitives de vos équipes avec des outils d'IA maîtrisés, encadrés et respectueux de vos données.", benefit: "Du temps rendu à l'essentiel." },
+      { idx: '07', title: "Création de sites web", img: "https://images.unsplash.com/photo-1481487196290-c152efe083f5?auto=format&fit=crop&w=600&q=70", desc: "Conception de sites et portails web clairs, accessibles et conformes (RGAA), pensés pour vos usagers comme pour vos services.", benefit: "Une présence en ligne à votre image." },
+    ];
+
+    const steps = [
+      { idx: '1', title: 'Comprendre', desc: "J'écoute votre contexte, vos contraintes et vos objectifs avant toute recommandation." },
+      { idx: '2', title: 'Analyser', desc: "J'examine l'existant avec méthode : technique, organisation, usages et risques." },
+      { idx: '3', title: 'Proposer', desc: "Je formule des solutions concrètes, hiérarchisées et adaptées à vos moyens." },
+      { idx: '4', title: 'Mettre en œuvre', desc: "J'accompagne le déploiement, en lien avec vos équipes et vos prestataires." },
+      { idx: '5', title: 'Transmettre', desc: "Je laisse votre organisation autonome, documentée et montée en compétence." },
+    ];
+
+    const valeurs = [
+      { title: 'Indépendance', desc: "Aucune revente, aucun intérêt commercial caché. Mes recommandations ne servent que votre intérêt." },
+      { title: 'Clarté', desc: "Des livrables lisibles par les élus comme par les techniciens. Pas de jargon inutile." },
+      { title: 'Proximité', desc: "Un interlocuteur unique, disponible et qui connaît les réalités du secteur public." },
+      { title: 'Confidentialité', desc: "Vos données et vos vulnérabilités restent strictement protégées." },
+    ];
+
+    const subjects = [
+      "Audit du système d'information",
+      "Schéma directeur SI",
+      "Plan de continuité d'activité",
+      "Gestion de crise cyber",
+      "DSI partagé",
+      "Automatisation de vos process avec l'IA",
+      "Création de sites web",
+      "Autre demande",
+    ];
+
+    return {
+      isAccueil: p === 'accueil',
+      isPrestations: p === 'prestations',
+      isApropos: p === 'apropos',
+      isMethodo: p === 'methodo',
+      isContact: p === 'contact',
+      navItems: [ mk('Accueil', 'accueil'), mk('Prestations', 'prestations'), mk('À propos', 'apropos'), mk('Mon approche', 'methodo'), mk('Contact', 'contact') ],
+      goAccueil: () => this.go('accueil'),
+      goPrestations: () => this.go('prestations'),
+      goApropos: () => this.go('apropos'),
+      goMethodo: () => this.go('methodo'),
+      goContact: () => this.go('contact'),
+      heroIsA: h === 'a',
+      heroIsB: h === 'b',
+      heroIsC: h === 'c',
+      setHeroA: () => this.setState({ hero: 'a' }),
+      setHeroB: () => this.setState({ hero: 'b' }),
+      setHeroC: () => this.setState({ hero: 'c' }),
+      segA: this.segStyle(h === 'a'),
+      segB: this.segStyle(h === 'b'),
+      segC: this.segStyle(h === 'c'),
+      prestations: prestations,
+      steps: steps,
+      valeurs: valeurs,
+      subjects: subjects,
+      formSent: this.state.formSent,
+      formNotSent: !this.state.formSent,
+      onSubmit: (e) => { e.preventDefault(); this.setState({ formSent: true }); },
+      resetForm: () => this.setState({ formSent: false }),
+      year: 2026,
+    };
+  }
+}
+</script>
+</body>
+</html>

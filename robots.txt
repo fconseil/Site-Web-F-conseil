@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://fconseil.github.io/Site-Web-F-conseil/sitemap.xml

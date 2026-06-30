@@ -23,7 +23,24 @@ try {
     git add --all
 
     $status = git status --short
-    if ([string]::IsNullOrWhiteSpace($status)) {
+    $hasUncommittedChanges = -not [string]::IsNullOrWhiteSpace($status)
+
+    $upstreamRef = $null
+    $upstreamOutput = git rev-parse --abbrev-ref --symbolic-full-name '@{upstream}' 2>$null
+    if ($LASTEXITCODE -eq 0 -and -not [string]::IsNullOrWhiteSpace($upstreamOutput)) {
+        $upstreamRef = $upstreamOutput.Trim()
+    }
+
+    $hasCommitsToPush = $false
+    if ($upstreamRef) {
+        $aheadCount = [int](git rev-list --count "$upstreamRef..HEAD")
+        $hasCommitsToPush = $aheadCount -gt 0
+    }
+    else {
+        $hasCommitsToPush = $true
+    }
+
+    if (-not $hasUncommittedChanges -and -not $hasCommitsToPush) {
         Write-Host 'Aucune modification à sauvegarder.'
         return
     }
@@ -36,7 +53,10 @@ try {
         }
     }
 
-    git commit -m $CommitMessage
+    if ($hasUncommittedChanges) {
+        git commit -m $CommitMessage
+    }
+
     git push -u origin HEAD
 }
 catch {
